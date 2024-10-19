@@ -1,5 +1,7 @@
 version: "3.7"
-name: lms
+networks:
+  lms-network:
+    driver: bridge
 services:
   mariadb:
     image: mariadb:10.6
@@ -12,9 +14,13 @@ services:
       MYSQL_ROOT_PASSWORD: 123
     volumes:
       - mariadb-data:/var/lib/mysql
+    networks:
+      - lms-network
 
   redis:
     image: redis:alpine
+    networks:
+      - lms-network
 
   frappe:
     image: frappe/bench:latest
@@ -27,6 +33,8 @@ services:
     ports:
       - 8000:8000
       - 9000:9000
+    networks:
+      - lms-network
 
 volumes:
   mariadb-data:

@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frappe-lms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frappe-lms
+  template:
+    metadata:
+      labels:
+        app: frappe-lms
+    spec:
+      containers:
+      - name: frappe-lms
+        image: frappe-lms:latest
+        ports:
+        - containerPort: 8000
